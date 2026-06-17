@@ -151,7 +151,7 @@ Install Python dependencies using `pip install -r requirements.txt`.
 ---
 
 ## **Contributions**
-This project was developed as part of a Data Science internship at **Sabudh Foundation**, under the mentorship of **Dr.&nbsp;Sukhjit Singh Sehra**
+This project was developed as part of a Data Science internship at **Sabudh Foundation**, under the mentorship of **Dr.&nbsp;Sukhjit Singh Sehra**.
 Contributors:
 - Amit Kumar Giri
 - Abhaynoor Singh
