@@ -1,0 +1,50 @@
+# config.yaml
+# ------------
+# All pipeline settings in one place.
+# Swap `source: webcam` → `source: ros_topic` when integrating with robot.
+
+# ── Input Source ──────────────────────────────────────────────────────────────
+input:
+  source: webcam          # webcam | video_file | ros_topic
+  device_id: 0            # webcam only
+  width: 640
+  height: 480
+  video_path: ""          # video_file only (e.g. demo.mp4)
+  ros_topic: /camera/image_raw   # ros_topic only
+
+# ── Perception Module (BLIP + YOLO + MiDaS) ──────────────────────────────────
+perception:
+  device: cpu             # cpu | cuda
+  blip_model: Salesforce/blip-image-captioning-base
+  yolo_model: yolov8n.pt
+  midas_variant: DPT_Hybrid
+  yolo_conf_threshold: 0.25
+  compute_embedding: false   # set true for SAS metric (slower)
+
+# ── Cola Coordinator (LLM) ────────────────────────────────────────────────────
+coordinator:
+  backend: hf             # hf (local, free) | openai (better quality)
+  hf_model: google/flan-t5-base
+  openai_model: gpt-4o-mini
+  openai_api_key: ""      # set via env var OPENAI_API_KEY instead
+
+# ── Active Perception Policy (AP-VLM) ────────────────────────────────────────
+active_perception:
+  max_iterations: 10
+  confidence_threshold: 0.6
+
+# ── Navigation Instruction ────────────────────────────────────────────────────
+navigation:
+  instruction: "Navigate to the exit door and avoid obstacles."
+
+# ── Pipeline Control ──────────────────────────────────────────────────────────
+pipeline:
+  frame_interval: 5       # process every N-th frame (1 = every frame)
+  max_frames: 100         # 0 = run until Ctrl+C
+  show_preview: false     # show cv2 window (needs display)
+
+# ── Output ────────────────────────────────────────────────────────────────────
+output:
+  results_dir: results
+  figures_dir: figures
+  session_name: ""        # auto-generated if empty

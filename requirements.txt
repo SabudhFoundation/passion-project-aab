@@ -1,0 +1,36 @@
+# VLN Live Perception Pipeline — requirements.txt
+# Python version: 3.10.x  (tested on Python 3.10.12)
+# Install: pip install -r requirements.txt
+
+# ── Core vision / ML ─────────────────────────────────────────────────────────
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+# For GPU: install torch with CUDA from https://pytorch.org/get-started/locally/
+
+# ── Perception models ─────────────────────────────────────────────────────────
+transformers>=4.37.0          # BLIP (image captioning)
+ultralytics>=8.0.0            # YOLOv8 (object detection)
+timm>=0.9.0                   # required by MiDaS via torch.hub
+
+# ── Image / video ─────────────────────────────────────────────────────────────
+opencv-python>=4.8.0
+Pillow>=10.0.0
+numpy>=1.24.0
+
+# ── Cola coordinator (LLM) ────────────────────────────────────────────────────
+# HuggingFace (default, free, local):
+sentencepiece>=0.1.99         # required by flan-t5 tokenizer
+accelerate>=0.24.0            # for HF pipeline device placement
+# OpenAI (optional, better quality):
+# openai>=1.0.0               # uncomment if using backend: openai
+
+# ── Config ────────────────────────────────────────────────────────────────────
+PyYAML>=6.0
+
+# ── Report / figures ─────────────────────────────────────────────────────────
+matplotlib>=3.7.0
+
+# ── Optional: ROS2 integration (future robot) ────────────────────────────────
+# rclpy                       # install via: sudo apt install ros-humble-rclpy
+# cv_bridge                   # install via: sudo apt install ros-humble-cv-bridge
