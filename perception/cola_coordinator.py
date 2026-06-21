@@ -104,8 +104,8 @@ class ColaCoordinator:
     """
     Cola-style multi-VLM coordinator for VLN active perception.
 
-    Uses an LLM (via Hugging Face pipeline or OpenAI API) to coordinate
-    BLIP (VLM-1) and YOLO (VLM-2) outputs into a navigation decision.
+    Uses T5ForConditionalGeneration directly (no HF pipeline) to avoid
+    transformers>=5.x compatibility issues with text2text-generation task.
 
     AP-VLM integration: adds `is_conclusive` flag — if False, the
     pipeline signals that the robot/camera should seek a better viewpoint
@@ -115,7 +115,7 @@ class ColaCoordinator:
     def __init__(
         self,
         backend: str = "hf",          # "hf" | "openai"
-        hf_model: str = "google/flan-t5-base",   # small, runs on CPU
+        hf_model: str = "google/flan-t5-base",
         openai_model: str = "gpt-4o-mini",
         openai_api_key: str = "",
         max_new_tokens: int = 512,
@@ -134,23 +134,21 @@ class ColaCoordinator:
     # ── backend init ──────────────────────────────────────────────────────────
 
     def _init_hf(self, model_name: str, device: str):
-        from transformers import pipeline as hf_pipeline
+        """
+        Load T5 directly via T5ForConditionalGeneration + T5Tokenizer.
+        Bypasses hf_pipeline entirely — works on transformers 4.x and 5.x.
+        """
+        import torch
+        from transformers import T5ForConditionalGeneration, T5Tokenizer
+
         print(f"[ColaCoordinator] HF model: {model_name} on {device}")
-        self._pipe = hf_pipeline(
-            "text2text-generation",
-            model=model_name,
-            device=0 if device == "cuda" else -1,
-            max_new_tokens=self.max_new_tokens,
+        self._tokenizer = T5Tokenizer.from_pretrained(model_name)
+        self._model = T5ForConditionalGeneration.from_pretrained(model_name)
+        self._hf_device = torch.device(
+            "cuda" if device == "cuda" and torch.cuda.is_available() else "cpu"
         )
-        print("[ColaCoordinator] LLM rea
-    # def _init_hf(self, model_name: str, device: str):
-    #     from transformers import pipeline as hf_pipeline
-    #     self._pipe = hf_pipeline(
-    #         "text-generation",           # was "text2text-generation"
-    #         model=model_name,
-    #         device=0 if device == "cuda" else -1,
-    #         max_new_tokens=self.max_new_tokens,
-    #     )
+        self._model = self._model.to(self._hf_device).eval()
+        print("[ColaCoordinator] LLM ready")
 
     def _init_openai(self, model: str, api_key: str):
         try:
@@ -165,8 +163,19 @@ class ColaCoordinator:
 
     def _call_llm(self, prompt: str) -> str:
         if self.backend == "hf":
-            out = self._pipe(prompt, do_sample=False)
-            return out[0]["generated_text"]
+            import torch
+            inputs = self._tokenizer(
+                prompt,
+                return_tensors="pt",
+                truncation=True,
+                max_length=512,
+            ).to(self._hf_device)
+            with torch.no_grad():
+                outputs = self._model.generate(
+                    **inputs,
+                    max_new_tokens=self.max_new_tokens,
+                )
+            return self._tokenizer.decode(outputs[0], skip_special_tokens=True)
         else:
             resp = self._oai_client.chat.completions.create(
                 model=self._oai_model,
@@ -200,12 +209,12 @@ class ColaCoordinator:
         objs = perception.get("objects", [])
         relevant = extract_navigation_relevant(objs, instruction)
         return {
-            "scene_summary":   perception.get("caption", "Scene unavailable."),
+            "scene_summary":    perception.get("caption", "Scene unavailable."),
             "relevant_objects": relevant,
-            "is_conclusive":   len(objs) > 0,
-            "confidence":      0.5,
-            "action_hint":     "explore_more" if not objs else "move_forward",
-            "reasoning":       "Fallback heuristic (LLM unavailable).",
+            "is_conclusive":    len(objs) > 0,
+            "confidence":       0.5,
+            "action_hint":      "explore_more" if not objs else "move_forward",
+            "reasoning":        "Fallback heuristic (LLM unavailable).",
         }
 
     # ── main coordination method ──────────────────────────────────────────────
@@ -216,7 +225,7 @@ class ColaCoordinator:
         instruction: str,
     ) -> Dict[str, Any]:
         """
-        Cola coordination: BLIP + YOLO → LLM → navigation decision.
+        Cola coordination: BLIP + YOLO -> LLM -> navigation decision.
 
         Args:
             perception : output of PerceptionModule.process_scene()
@@ -225,24 +234,23 @@ class ColaCoordinator:
         Returns:
             coordination_result dict (see module docstring)
         """
-        caption      = perception.get("caption", "")
-        objects      = perception.get("objects", [])
-        yolo_desc    = yolo_to_natural_language(objects)
+        caption   = perception.get("caption", "")
+        objects   = perception.get("objects", [])
+        yolo_desc = yolo_to_natural_language(objects)
 
-        # Build Cola prompt (Table 1 from paper)
         vlm1_answer = f"The scene shows: {caption}"
         vlm2_answer = yolo_desc
 
         prompt = COLA_PROMPT_TEMPLATE.format(
-            blip_caption  = caption,
+            blip_caption     = caption,
             yolo_description = yolo_desc,
-            instruction   = instruction,
-            vlm1_answer   = vlm1_answer,
-            vlm2_answer   = vlm2_answer,
+            instruction      = instruction,
+            vlm1_answer      = vlm1_answer,
+            vlm2_answer      = vlm2_answer,
         )
 
         try:
-            raw = self._call_llm(prompt)
+            raw    = self._call_llm(prompt)
             result = self._parse_json(raw)
             if result is None:
                 print("[ColaCoordinator] JSON parse failed, using fallback")
@@ -251,7 +259,7 @@ class ColaCoordinator:
             print(f"[ColaCoordinator] LLM error: {e}")
             result = self._fallback(perception, instruction)
 
-        # Ensure required keys exist
+        # Ensure all required keys exist
         result.setdefault("scene_summary",    caption)
         result.setdefault("relevant_objects", [])
         result.setdefault("is_conclusive",    False)
@@ -260,8 +268,8 @@ class ColaCoordinator:
         result.setdefault("reasoning",        "")
 
         # Attach frame metadata passthrough
-        result["frame_id"]     = perception.get("frame_id", -1)
-        result["timestamp"]    = perception.get("timestamp", 0.0)
-        result["num_objects"]  = perception.get("num_objects", 0)
+        result["frame_id"]    = perception.get("frame_id", -1)
+        result["timestamp"]   = perception.get("timestamp", 0.0)
+        result["num_objects"] = perception.get("num_objects", 0)
 
         return result

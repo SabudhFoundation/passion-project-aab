@@ -1,0 +1,411 @@
+{
+  "session": "20260621_170041",
+  "total_frames": 10,
+  "perception_log": [
+    {
+      "frame_id": 5,
+      "timestamp": 1782041448.9088159,
+      "caption": "a man with a tie around his neck",
+      "num_objects": 2,
+      "objects": [
+        {
+          "name": "person",
+          "confidence": 0.46589162945747375,
+          "center": [
+            370.5160217285156,
+            289.97613525390625
+          ],
+          "direction": "center",
+          "range": "mid"
+        },
+        {
+          "name": "person",
+          "confidence": 0.38953322172164917,
+          "center": [
+            345.9881591796875,
+            291.1595764160156
+          ],
+          "direction": "center",
+          "range": "mid"
+        }
+      ],
+      "has_depth": true,
+      "inference_ms": 6701.1
+    },
+    {
+      "frame_id": 10,
+      "timestamp": 1782041457.5049243,
+      "caption": "a man with a beard and a green shirt",
+      "num_objects": 1,
+      "objects": [
+        {
+          "name": "person",
+          "confidence": 0.7825943827629089,
+          "center": [
+            328.32708740234375,
+            289.84239959716797
+          ],
+          "direction": "center",
+          "range": "mid"
+        }
+      ],
+      "has_depth": true,
+      "inference_ms": 5941.2
+    },
+    {
+      "frame_id": 15,
+      "timestamp": 1782041465.3103006,
+      "caption": "a man with a beard and a blue shirt",
+      "num_objects": 1,
+      "objects": [
+        {
+          "name": "person",
+          "confidence": 0.7905453443527222,
+          "center": [
+            370.69171142578125,
+            269.35540771484375
+          ],
+          "direction": "center",
+          "range": "mid"
+        }
+      ],
+      "has_depth": true,
+      "inference_ms": 6354.0
+    },
+    {
+      "frame_id": 20,
+      "timestamp": 1782041472.2741225,
+      "caption": "a man with a beard and a blue shirt",
+      "num_objects": 1,
+      "objects": [
+        {
+          "name": "person",
+          "confidence": 0.8030295372009277,
+          "center": [
+            372.75994873046875,
+            276.274169921875
+          ],
+          "direction": "center",
+          "range": "mid"
+        }
+      ],
+      "has_depth": true,
+      "inference_ms": 5641.7
+    },
+    {
+      "frame_id": 25,
+      "timestamp": 1782041484.87865,
+      "caption": "a man with a beard and a blue shirt",
+      "num_objects": 1,
+      "objects": [
+        {
+          "name": "person",
+          "confidence": 0.7512382864952087,
+          "center": [
+            352.8276062011719,
+            271.40880584716797
+          ],
+          "direction": "center",
+          "range": "mid"
+        }
+      ],
+      "has_depth": true,
+      "inference_ms": 11306.7
+    },
+    {
+      "frame_id": 30,
+      "timestamp": 1782041499.6552866,
+      "caption": "a man with a beard and a blue shirt",
+      "num_objects": 1,
+      "objects": [
+        {
+          "name": "person",
+          "confidence": 0.789337158203125,
+          "center": [
+            318.3952941894531,
+            269.2828063964844
+          ],
+          "direction": "center",
+          "range": "mid"
+        }
+      ],
+      "has_depth": true,
+      "inference_ms": 11017.4
+    },
+    {
+      "frame_id": 35,
+      "timestamp": 1782041515.835785,
+      "caption": "a man with a beard and a blue shirt",
+      "num_objects": 1,
+      "objects": [
+        {
+          "name": "person",
+          "confidence": 0.7789149880409241,
+          "center": [
+            316.1615295410156,
+            270.0616149902344
+          ],
+          "direction": "center",
+          "range": "mid"
+        }
+      ],
+      "has_depth": true,
+      "inference_ms": 13869.9
+    },
+    {
+      "frame_id": 40,
+      "timestamp": 1782041529.3278785,
+      "caption": "a man with a beard and a blue shirt",
+      "num_objects": 1,
+      "objects": [
+        {
+          "name": "person",
+          "confidence": 0.8537154197692871,
+          "center": [
+            363.1724548339844,
+            277.05169677734375
+          ],
+          "direction": "center",
+          "range": "mid"
+        }
+      ],
+      "has_depth": true,
+      "inference_ms": 11019.8
+    },
+    {
+      "frame_id": 45,
+      "timestamp": 1782041541.2228074,
+      "caption": "a man with a tooth in his mouth",
+      "num_objects": 1,
+      "objects": [
+        {
+          "name": "person",
+          "confidence": 0.8665739297866821,
+          "center": [
+            362.18585205078125,
+            274.82098388671875
+          ],
+          "direction": "center",
+          "range": "mid"
+        }
+      ],
+      "has_depth": true,
+      "inference_ms": 10114.9
+    },
+    {
+      "frame_id": 50,
+      "timestamp": 1782041559.1346533,
+      "caption": "a man with a tooth in his mouth",
+      "num_objects": 1,
+      "objects": [
+        {
+          "name": "person",
+          "confidence": 0.8848382234573364,
+          "center": [
+            360.26513671875,
+            266.559814453125
+          ],
+          "direction": "center",
+          "range": "mid"
+        }
+      ],
+      "has_depth": true,
+      "inference_ms": 15222.1
+    }
+  ],
+  "coordination_log": [
+    {
+      "frame_id": 5,
+      "scene_summary": "a man with a tie around his neck",
+      "is_conclusive": true,
+      "confidence": 0.5,
+      "action_hint": "move_forward",
+      "relevant_objects": [
+        "person",
+        "person"
+      ]
+    },
+    {
+      "frame_id": 10,
+      "scene_summary": "a man with a beard and a green shirt",
+      "is_conclusive": true,
+      "confidence": 0.5,
+      "action_hint": "move_forward",
+      "relevant_objects": [
+        "person"
+      ]
+    },
+    {
+      "frame_id": 15,
+      "scene_summary": "a man with a beard and a blue shirt",
+      "is_conclusive": true,
+      "confidence": 0.5,
+      "action_hint": "move_forward",
+      "relevant_objects": [
+        "person"
+      ]
+    },
+    {
+      "frame_id": 20,
+      "scene_summary": "a man with a beard and a blue shirt",
+      "is_conclusive": true,
+      "confidence": 0.5,
+      "action_hint": "move_forward",
+      "relevant_objects": [
+        "person"
+      ]
+    },
+    {
+      "frame_id": 25,
+      "scene_summary": "a man with a beard and a blue shirt",
+      "is_conclusive": true,
+      "confidence": 0.5,
+      "action_hint": "move_forward",
+      "relevant_objects": [
+        "person"
+      ]
+    },
+    {
+      "frame_id": 30,
+      "scene_summary": "a man with a beard and a blue shirt",
+      "is_conclusive": true,
+      "confidence": 0.5,
+      "action_hint": "move_forward",
+      "relevant_objects": [
+        "person"
+      ]
+    },
+    {
+      "frame_id": 35,
+      "scene_summary": "a man with a beard and a blue shirt",
+      "is_conclusive": true,
+      "confidence": 0.5,
+      "action_hint": "move_forward",
+      "relevant_objects": [
+        "person"
+      ]
+    },
+    {
+      "frame_id": 40,
+      "scene_summary": "a man with a beard and a blue shirt",
+      "is_conclusive": true,
+      "confidence": 0.5,
+      "action_hint": "move_forward",
+      "relevant_objects": [
+        "person"
+      ]
+    },
+    {
+      "frame_id": 45,
+      "scene_summary": "a man with a tooth in his mouth",
+      "is_conclusive": true,
+      "confidence": 0.5,
+      "action_hint": "move_forward",
+      "relevant_objects": [
+        "person"
+      ]
+    },
+    {
+      "frame_id": 50,
+      "scene_summary": "a man with a tooth in his mouth",
+      "is_conclusive": true,
+      "confidence": 0.5,
+      "action_hint": "move_forward",
+      "relevant_objects": [
+        "person"
+      ]
+    }
+  ],
+  "action_log": [
+    {
+      "iteration": 1,
+      "frame_id": 5,
+      "action": "move_forward",
+      "confidence": 0.5,
+      "terminated": false
+    },
+    {
+      "iteration": 2,
+      "frame_id": 10,
+      "action": "move_forward",
+      "confidence": 0.5,
+      "terminated": false
+    },
+    {
+      "iteration": 3,
+      "frame_id": 15,
+      "action": "move_forward",
+      "confidence": 0.5,
+      "terminated": false
+    },
+    {
+      "iteration": 4,
+      "frame_id": 20,
+      "action": "move_forward",
+      "confidence": 0.5,
+      "terminated": false
+    },
+    {
+      "iteration": 5,
+      "frame_id": 25,
+      "action": "move_forward",
+      "confidence": 0.5,
+      "terminated": false
+    },
+    {
+      "iteration": 6,
+      "frame_id": 30,
+      "action": "move_forward",
+      "confidence": 0.5,
+      "terminated": false
+    },
+    {
+      "iteration": 7,
+      "frame_id": 35,
+      "action": "move_forward",
+      "confidence": 0.5,
+      "terminated": false
+    },
+    {
+      "iteration": 8,
+      "frame_id": 40,
+      "action": "move_forward",
+      "confidence": 0.5,
+      "terminated": false
+    },
+    {
+      "iteration": 9,
+      "frame_id": 45,
+      "action": "move_forward",
+      "confidence": 0.5,
+      "terminated": false
+    },
+    {
+      "iteration": 10,
+      "frame_id": 50,
+      "action": "stop",
+      "confidence": 0.5,
+      "terminated": true
+    }
+  ],
+  "episode_summary": {
+    "total_iterations": 10,
+    "final_answer": "a man with a tooth in his mouth",
+    "unique_objects_seen": [
+      "person"
+    ],
+    "frames_processed": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50
+    ],
+    "terminated": true
+  }
+}
