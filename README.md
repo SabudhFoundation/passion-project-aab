@@ -1,5 +1,7 @@
 # **Vision-Language Navigation for Path Planning using LLMs and Reinforcement Learning**
 
+*for perception pipeline switch to **perception** branch*
+
 This project implements a **vision-language navigation (VLN) and autonomous path planning pipeline** for the **Yahboom ROSMASTER X3 PLUS** robot on **ROS2 Humble**. It combines **SLAM-based localisation and mapping**, an **HMA-RRT\* path planner**, and a **YOLO-based visual perception module** to let the robot understand natural-language tasks (e.g. *"bring me a cup of water"*), locate the relevant object, plan a collision-free path to it, and navigate there.
 
 ## **Project Overview**
